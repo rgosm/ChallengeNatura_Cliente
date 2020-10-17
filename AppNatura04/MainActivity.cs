@@ -53,10 +53,8 @@ namespace AppNaturaCliente {
             WebSettings webSettings = webViewInicial.Settings;
             webSettings.JavaScriptEnabled = true;
 
-            if (Accelerometer.IsMonitoring)
-                Accelerometer.Stop();
-            else
-                Accelerometer.Start(SensorSpeed.Game);
+            ToggleAccelerometer();
+
         }
 
         internal class ExtendWebViewClient : WebViewClient {
@@ -82,14 +80,13 @@ namespace AppNaturaCliente {
 
         public void ShakeDetected(object sender, EventArgs e)
         {
-            if (IsOpen == true)
-                Toast.MakeText(Application.Context, "Chat aberto", ToastLength.Short).Show();
-            else
-                IsOpen = true;
-                MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                         StartActivity(typeof(chat));
-                    });
+           MainThread.BeginInvokeOnMainThread(() =>
+            {
+                    StartActivity(typeof(chat));
+                    IsOpen=true;
+                    ToggleAccelerometer();
+                    System.Console.WriteLine(IsOpen);
+            });
 
         }
 
@@ -97,6 +94,25 @@ namespace AppNaturaCliente {
         {
             IsOpen = value;
             System.Console.WriteLine(IsOpen);
+        }
+
+        public void ToggleAccelerometer()
+        {
+            try
+            {
+                if (Accelerometer.IsMonitoring)
+                    Accelerometer.Stop();
+                else
+                    Accelerometer.Start(SensorSpeed.Game);
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Feature not supported on device
+            }
+            catch (System.Exception ex)
+            {
+                // Other error has occurred.
+            }
         }
     }
 }

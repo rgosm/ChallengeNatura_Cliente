@@ -8,6 +8,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Webkit;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace AppNaturaCliente {
     [Activity(Label = "chat")]
@@ -22,34 +23,36 @@ namespace AppNaturaCliente {
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.chat);
 
-            WebView webView = FindViewById<WebView>(Resource.Id.webview);
+            System.Console.WriteLine("Abrindo o chat");
+
+            WebView webViewChat = FindViewById<WebView>(Resource.Id.webview);
             FloatingActionButton BtnHide = FindViewById<FloatingActionButton>(Resource.Id.btnHide);
             FloatingActionButton BtnShow = FindViewById<FloatingActionButton>(Resource.Id.btnShow);
             FloatingActionButton BtnClose = FindViewById<FloatingActionButton>(Resource.Id.btnClose);
             ImageView ImgShow = FindViewById<ImageView>(Resource.Id.imgWW);
-            webView.Settings.JavaScriptEnabled = true;
-            webView.Settings.DomStorageEnabled = true;
-            webView.SetWebViewClient(new HelloWebViewClient());
-            webView.LoadUrl("https://mdh-chat.metasix.solutions/livechat?mode=popout");
+            webViewChat.Settings.JavaScriptEnabled = true;
+            webViewChat.Settings.DomStorageEnabled = true;
+            webViewChat.SetWebViewClient(new HelloWebViewClient());
+            webViewChat.LoadUrl("https://mdh-chat.metasix.solutions/livechat?mode=popout");
 
             _ = DelayAction(9000);
 
             async Task DelayAction(int delay) {
                 await Task.Delay(delay);
-                webView.EvaluateJavascript($"document.getElementById('guestName').value = '{nome}'", null);
-                webView.EvaluateJavascript($"document.getElementById('guestEmail').value = '{email}'", null);
-                webView.EvaluateJavascript($"document.getElementById('guestPhone').value = '{cel}'", null);
+                webViewChat.EvaluateJavascript($"document.getElementById('guestName').value = '{nome}'", null);
+                webViewChat.EvaluateJavascript($"document.getElementById('guestEmail').value = '{email}'", null);
+                webViewChat.EvaluateJavascript($"document.getElementById('guestPhone').value = '{cel}'", null);
             }
 
             BtnHide.Click += (o, e) => {
-                webView.Visibility = ViewStates.Invisible;
+                webViewChat.Visibility = ViewStates.Invisible;
                 BtnHide.Visibility = ViewStates.Invisible;
                 BtnShow.Visibility = ViewStates.Visible;
                 ImgShow.Visibility = ViewStates.Visible;
             };
 
             BtnShow.Click += (o, e) => {
-                webView.Visibility = ViewStates.Visible;
+                webViewChat.Visibility = ViewStates.Visible;
                 BtnHide.Visibility = ViewStates.Visible;
                 BtnShow.Visibility = ViewStates.Invisible;
                 ImgShow.Visibility = ViewStates.Invisible;
@@ -57,6 +60,8 @@ namespace AppNaturaCliente {
 
             BtnClose.Click += (o, e) => {
                 Finish();
+                Accelerometer.ShakeDetected -= new MainActivity().ShakeDetected;
+                new MainActivity().ToggleAccelerometer();
                 new MainActivity().SetIsOpen(false);
             };
         }
