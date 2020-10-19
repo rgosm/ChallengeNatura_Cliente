@@ -1,7 +1,7 @@
 package crc645255ab2e60a8ccd8;
 
 
-public class chat
+public class Chat
 	extends android.support.v7.app.AppCompatActivity
 	implements
 		mono.android.IGCUserPeer
@@ -14,16 +14,17 @@ public class chat
 			"n_onCreateOptionsMenu:(Landroid/view/Menu;)Z:GetOnCreateOptionsMenu_Landroid_view_Menu_Handler\n" +
 			"n_onOptionsItemSelected:(Landroid/view/MenuItem;)Z:GetOnOptionsItemSelected_Landroid_view_MenuItem_Handler\n" +
 			"n_onRequestPermissionsResult:(I[Ljava/lang/String;[I)V:GetOnRequestPermissionsResult_IarrayLjava_lang_String_arrayIHandler\n" +
+			"n_onBackPressed:()V:GetOnBackPressedHandler\n" +
 			"";
-		mono.android.Runtime.register ("AppNaturaCliente.chat, AppNaturaCliente", chat.class, __md_methods);
+		mono.android.Runtime.register ("AppNaturaCliente.Chat, AppNaturaCliente", Chat.class, __md_methods);
 	}
 
 
-	public chat ()
+	public Chat ()
 	{
 		super ();
-		if (getClass () == chat.class)
-			mono.android.TypeManager.Activate ("AppNaturaCliente.chat, AppNaturaCliente", "", this, new java.lang.Object[] {  });
+		if (getClass () == Chat.class)
+			mono.android.TypeManager.Activate ("AppNaturaCliente.Chat, AppNaturaCliente", "", this, new java.lang.Object[] {  });
 	}
 
 
@@ -57,6 +58,14 @@ public class chat
 	}
 
 	private native void n_onRequestPermissionsResult (int p0, java.lang.String[] p1, int[] p2);
+
+
+	public void onBackPressed ()
+	{
+		n_onBackPressed ();
+	}
+
+	private native void n_onBackPressed ();
 
 	private java.util.ArrayList refList;
 	public void monodroidAddReference (java.lang.Object obj)

@@ -12,7 +12,7 @@ using Xamarin.Essentials;
 
 namespace AppNaturaCliente {
     [Activity(Label = "chat")]
-    public class chat :  AppCompatActivity {
+    public class Chat :  AppCompatActivity {
 
         private string nome = "teste da silva";
         private string email = "teste.silva@fiap.com.br";
@@ -20,10 +20,8 @@ namespace AppNaturaCliente {
 
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.chat);
-
-            System.Console.WriteLine("Abrindo o chat");
 
             WebView webViewChat = FindViewById<WebView>(Resource.Id.webview);
             FloatingActionButton BtnHide = FindViewById<FloatingActionButton>(Resource.Id.btnHide);
@@ -62,7 +60,6 @@ namespace AppNaturaCliente {
                 Finish();
                 Accelerometer.ShakeDetected -= new MainActivity().ShakeDetected;
                 new MainActivity().ToggleAccelerometer();
-                new MainActivity().SetIsOpen(false);
             };
         }
 
@@ -85,9 +82,16 @@ namespace AppNaturaCliente {
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults) {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
+            Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+            Finish();
+            Accelerometer.ShakeDetected -= new MainActivity().ShakeDetected;
+            new MainActivity().ToggleAccelerometer();
         }
     }
 }

@@ -1,20 +1,7 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Support.V7.App;
-using Android.Runtime;
 using Android.Widget;
-using Android.Views;
-using Android.Gms.Vision;
-using Android.Gms.Vision.Texts;
-using Android.Graphics;
-using Android.Support.V4.App;
-using Android;
-using Android.Util;
-using Android.Content.PM;
-using static Android.Gms.Vision.Detector;
-using Java.Lang;
-using Java.IO;
-using System.Text.RegularExpressions;
 using Android.Webkit;
 using Xamarin.Essentials;
 using System;
@@ -26,7 +13,6 @@ namespace AppNaturaCliente {
         private Button btnCarrinho;
         private Button btnAjuda;
         private WebView webViewInicial;
-        private bool IsOpen = false;
 
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
@@ -70,7 +56,8 @@ namespace AppNaturaCliente {
         }
 
         private void BtnAjuda_Click(object sender, System.EventArgs e) {
-            StartActivity(typeof(chat));
+            StartActivity(typeof(Chat));
+            new MainActivity().ToggleAccelerometer();
         }
 
         private void BtnComprar_Click(object sender, System.EventArgs e) {
@@ -82,18 +69,10 @@ namespace AppNaturaCliente {
         {
            MainThread.BeginInvokeOnMainThread(() =>
             {
-                    StartActivity(typeof(chat));
-                    IsOpen=true;
+                    StartActivity(typeof(Chat));
                     ToggleAccelerometer();
-                    System.Console.WriteLine(IsOpen);
             });
 
-        }
-
-        public void SetIsOpen(bool value)
-        {
-            IsOpen = value;
-            System.Console.WriteLine(IsOpen);
         }
 
         public void ToggleAccelerometer()
@@ -105,13 +84,13 @@ namespace AppNaturaCliente {
                 else
                     Accelerometer.Start(SensorSpeed.Game);
             }
-            catch (FeatureNotSupportedException fnsEx)
+            catch (FeatureNotSupportedException)
             {
-                // Feature not supported on device
+                Toast.MakeText(Application.Context, "Feature not supported on device", ToastLength.Short).Show();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                // Other error has occurred.
+                Toast.MakeText(Application.Context, "Other error has occurred" + ex.Message, ToastLength.Short).Show();
             }
         }
     }

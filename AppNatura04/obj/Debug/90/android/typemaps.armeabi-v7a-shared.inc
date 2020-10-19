@@ -29996,50 +29996,50 @@
 	.section	.rodata.java_type_name.4999,"aMS",%progbits,1
 	.type	.L.java_type_name.4999, %object
 .L.java_type_name.4999:
-	.asciz	"crc645255ab2e60a8ccd8/ColetaCodigo"
-	.size	.L.java_type_name.4999, 35
+	.asciz	"crc645255ab2e60a8ccd8/Chat"
+	.size	.L.java_type_name.4999, 27
 
 	.section	.rodata.java_type_name.5000,"aMS",%progbits,1
 	.type	.L.java_type_name.5000, %object
 .L.java_type_name.5000:
-	.asciz	"crc645255ab2e60a8ccd8/ExibeProduto"
+	.asciz	"crc645255ab2e60a8ccd8/ColetaCodigo"
 	.size	.L.java_type_name.5000, 35
 
 	.section	.rodata.java_type_name.5001,"aMS",%progbits,1
 	.type	.L.java_type_name.5001, %object
 .L.java_type_name.5001:
-	.asciz	"crc645255ab2e60a8ccd8/HelloWebViewClient"
-	.size	.L.java_type_name.5001, 41
+	.asciz	"crc645255ab2e60a8ccd8/ExibeProduto"
+	.size	.L.java_type_name.5001, 35
 
 	.section	.rodata.java_type_name.5002,"aMS",%progbits,1
 	.type	.L.java_type_name.5002, %object
 .L.java_type_name.5002:
-	.asciz	"crc645255ab2e60a8ccd8/ListViewAdapter"
-	.size	.L.java_type_name.5002, 38
+	.asciz	"crc645255ab2e60a8ccd8/HelloWebViewClient"
+	.size	.L.java_type_name.5002, 41
 
 	.section	.rodata.java_type_name.5003,"aMS",%progbits,1
 	.type	.L.java_type_name.5003, %object
 .L.java_type_name.5003:
-	.asciz	"crc645255ab2e60a8ccd8/ListaCarrinho"
-	.size	.L.java_type_name.5003, 36
+	.asciz	"crc645255ab2e60a8ccd8/ListViewAdapter"
+	.size	.L.java_type_name.5003, 38
 
 	.section	.rodata.java_type_name.5004,"aMS",%progbits,1
 	.type	.L.java_type_name.5004, %object
 .L.java_type_name.5004:
-	.asciz	"crc645255ab2e60a8ccd8/MainActivity"
-	.size	.L.java_type_name.5004, 35
+	.asciz	"crc645255ab2e60a8ccd8/ListaCarrinho"
+	.size	.L.java_type_name.5004, 36
 
 	.section	.rodata.java_type_name.5005,"aMS",%progbits,1
 	.type	.L.java_type_name.5005, %object
 .L.java_type_name.5005:
-	.asciz	"crc645255ab2e60a8ccd8/MainActivity_ExtendWebViewClient"
-	.size	.L.java_type_name.5005, 55
+	.asciz	"crc645255ab2e60a8ccd8/MainActivity"
+	.size	.L.java_type_name.5005, 35
 
 	.section	.rodata.java_type_name.5006,"aMS",%progbits,1
 	.type	.L.java_type_name.5006, %object
 .L.java_type_name.5006:
-	.asciz	"crc645255ab2e60a8ccd8/chat"
-	.size	.L.java_type_name.5006, 27
+	.asciz	"crc645255ab2e60a8ccd8/MainActivity_ExtendWebViewClient"
+	.size	.L.java_type_name.5006, 55
 
 	.section	.rodata.java_type_name.5007,"aMS",%progbits,1
 	.type	.L.java_type_name.5007, %object
@@ -71111,43 +71111,43 @@
 	.section	.rodata.managed_type_name.5304,"aMS",%progbits,1
 	.type	.L.managed_type_name.5304, %object
 .L.managed_type_name.5304:
-	.asciz	"AppNaturaCliente.ColetaCodigo, AppNaturaCliente"
-	.size	.L.managed_type_name.5304, 48
+	.asciz	"AppNaturaCliente.Chat, AppNaturaCliente"
+	.size	.L.managed_type_name.5304, 40
 	.section	.rodata.managed_type_name.5305,"aMS",%progbits,1
 	.type	.L.managed_type_name.5305, %object
 .L.managed_type_name.5305:
-	.asciz	"AppNaturaCliente.ExibeProduto, AppNaturaCliente"
+	.asciz	"AppNaturaCliente.ColetaCodigo, AppNaturaCliente"
 	.size	.L.managed_type_name.5305, 48
 	.section	.rodata.managed_type_name.5306,"aMS",%progbits,1
 	.type	.L.managed_type_name.5306, %object
 .L.managed_type_name.5306:
-	.asciz	"AppNaturaCliente.HelloWebViewClient, AppNaturaCliente"
-	.size	.L.managed_type_name.5306, 54
+	.asciz	"AppNaturaCliente.ExibeProduto, AppNaturaCliente"
+	.size	.L.managed_type_name.5306, 48
 	.section	.rodata.managed_type_name.5307,"aMS",%progbits,1
 	.type	.L.managed_type_name.5307, %object
 .L.managed_type_name.5307:
-	.asciz	"AppNaturaCliente.ListViewAdapter, AppNaturaCliente"
-	.size	.L.managed_type_name.5307, 51
+	.asciz	"AppNaturaCliente.HelloWebViewClient, AppNaturaCliente"
+	.size	.L.managed_type_name.5307, 54
 	.section	.rodata.managed_type_name.5308,"aMS",%progbits,1
 	.type	.L.managed_type_name.5308, %object
 .L.managed_type_name.5308:
-	.asciz	"AppNaturaCliente.ListaCarrinho, AppNaturaCliente"
-	.size	.L.managed_type_name.5308, 49
+	.asciz	"AppNaturaCliente.ListViewAdapter, AppNaturaCliente"
+	.size	.L.managed_type_name.5308, 51
 	.section	.rodata.managed_type_name.5309,"aMS",%progbits,1
 	.type	.L.managed_type_name.5309, %object
 .L.managed_type_name.5309:
-	.asciz	"AppNaturaCliente.MainActivity+ExtendWebViewClient, AppNaturaCliente"
-	.size	.L.managed_type_name.5309, 68
+	.asciz	"AppNaturaCliente.ListaCarrinho, AppNaturaCliente"
+	.size	.L.managed_type_name.5309, 49
 	.section	.rodata.managed_type_name.5310,"aMS",%progbits,1
 	.type	.L.managed_type_name.5310, %object
 .L.managed_type_name.5310:
-	.asciz	"AppNaturaCliente.MainActivity, AppNaturaCliente"
-	.size	.L.managed_type_name.5310, 48
+	.asciz	"AppNaturaCliente.MainActivity+ExtendWebViewClient, AppNaturaCliente"
+	.size	.L.managed_type_name.5310, 68
 	.section	.rodata.managed_type_name.5311,"aMS",%progbits,1
 	.type	.L.managed_type_name.5311, %object
 .L.managed_type_name.5311:
-	.asciz	"AppNaturaCliente.chat, AppNaturaCliente"
-	.size	.L.managed_type_name.5311, 40
+	.asciz	"AppNaturaCliente.MainActivity, AppNaturaCliente"
+	.size	.L.managed_type_name.5311, 48
 	.section	.rodata.managed_type_name.5312,"aMS",%progbits,1
 	.type	.L.managed_type_name.5312, %object
 .L.managed_type_name.5312:

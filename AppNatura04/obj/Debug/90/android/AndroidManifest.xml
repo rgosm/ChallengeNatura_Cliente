@@ -8,7 +8,7 @@
   <application android:name="android.app.Application" android:allowBackup="true" android:appComponentFactory="android.support.v4.app.CoreComponentFactory" android:debuggable="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme">
     <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr" />
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
-    <activity android:name="crc645255ab2e60a8ccd8.chat" android:label="chat" />
+    <activity android:name="crc645255ab2e60a8ccd8.Chat" android:label="chat" />
     <activity android:name="crc645255ab2e60a8ccd8.ColetaCodigo" android:label="Direcione para o código do produto" />
     <activity android:name="crc645255ab2e60a8ccd8.ListaCarrinho" android:label="ListaCarrinho" />
     <activity android:name="crc645255ab2e60a8ccd8.MainActivity" android:label="@string/app_name" android:theme="@style/AppTheme">
