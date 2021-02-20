@@ -1,27 +1,12 @@
 ﻿using Android.App;
 using Android.OS;
-using Android.Support.V7.App;
-using Android.Runtime;
 using Android.Widget;
-using Android.Views;
-using Android.Gms.Vision;
-using Android.Gms.Vision.Texts;
-using Android.Graphics;
-using Android.Support.V4.App;
-using Android;
-using Android.Util;
-using Android.Content.PM;
-using static Android.Gms.Vision.Detector;
-using Java.Lang;
-using Java.IO;
-using System.IO;
-using System.Text.RegularExpressions;
 using MySql.Data.MySqlClient;
 using System;
 using System.Globalization;
-using AlertDialog = Android.App.AlertDialog;
 
-namespace AppNaturaCliente {
+namespace AppNaturaCliente
+{
     [Activity(Label = "Exibe Produto")]
     public class ExibeProduto : Activity {
         private Button btnIncluir;

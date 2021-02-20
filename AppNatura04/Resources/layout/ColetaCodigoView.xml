@@ -21,4 +21,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_gravity="bottom|end"
+        android:src="@android:drawable/stat_sys_upload"
+        android:backgroundTint="#6495ED"
+        android:tint="#ffffff"  />
+
 </RelativeLayout>

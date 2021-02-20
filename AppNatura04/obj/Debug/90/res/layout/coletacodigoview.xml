@@ -1,24 +1,2 @@
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
-
-        <SurfaceView
-        android:id="@+id/surface_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-        <TextView
-            android:id="@+id/text_view"
-            android:text="Aguardando Produto"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
-
-</RelativeLayout>
+  <RelativeLayout android:padding="16dp" android:layout_width="match_parent" android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android"><SurfaceView android:id="@+id/surface_view" android:layout_width="match_parent" android:layout_height="match_parent" /><TextView android:id="@+id/text_view" android:text="Aguardando Produto" android:textColor="@android:color/white" android:textSize="20sp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" /><android.support.design.widget.FloatingActionButton android:id="@+id/btn_upload" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:layout_marginBottom="1dp" android:layout_marginRight="1dp" android:layout_gravity="bottom|end" android:src="@android:drawable/stat_sys_upload" android:backgroundTint="#6495ED" android:tint="#ffffff" /></RelativeLayout>

@@ -4,6 +4,7 @@ public class MonoPackageManager_Resources {
 		/* We need to ensure that "AppNaturaCliente.dll" comes first in this list. */
 		"AppNaturaCliente.dll",
 		"MySql.Data.CF.dll",
+		"Plugin.Media.dll",
 		"Xamarin.Android.Arch.Core.Common.dll",
 		"Xamarin.Android.Arch.Core.Runtime.dll",
 		"Xamarin.Android.Arch.Lifecycle.Common.dll",

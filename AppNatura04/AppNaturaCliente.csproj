@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="chat.cs" />
     <Compile Include="ColetaCodigo.cs" />
+    <Compile Include="ColetaCodigoFoto.cs" />
     <Compile Include="ComandosSQL.cs" />
     <Compile Include="Conexao.cs" />
     <Compile Include="HelloWebViewClient.cs" />
@@ -110,6 +111,9 @@
   <ItemGroup>
     <PackageReference Include="System.Data.SqlClient">
       <Version>4.8.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media">
+      <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
@@ -185,6 +189,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\WW.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\coletacodigofoto.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
