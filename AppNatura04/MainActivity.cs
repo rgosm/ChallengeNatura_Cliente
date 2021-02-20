@@ -12,7 +12,7 @@ namespace AppNaturaCliente {
         private Button btnComprar;
         private Button btnCarrinho;
         private Button btnAjuda;
-        private Button btnUpload;
+        
         private WebView webViewInicial;
 
         protected override void OnCreate(Bundle savedInstanceState) {
@@ -31,8 +31,6 @@ namespace AppNaturaCliente {
 
             btnAjuda = FindViewById<Button>(Resource.Id.btnAjuda);
             btnAjuda.Click += BtnAjuda_Click;
-
-            btnUpload = FindViewById<Button>(Resource.Id.btn_upload);
 
             webViewInicial.SetWebViewClient(new ExtendWebViewClient());
             webViewInicial.LoadUrl("https://www.natura.com.br/c/tudo-em-promocoes");
@@ -66,7 +64,7 @@ namespace AppNaturaCliente {
         private void BtnComprar_Click(object sender, System.EventArgs e) {
             StartActivity(typeof(ColetaCodigo));
         }
-        
+
 
         public void ShakeDetected(object sender, EventArgs e)
         {

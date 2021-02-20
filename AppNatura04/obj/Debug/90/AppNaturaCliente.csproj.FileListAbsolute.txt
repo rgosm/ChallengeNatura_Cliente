@@ -325,3 +325,4 @@ C:\train\appNatura\GitHubLuscaFusca\AppNaturaCliente\AppNatura04\obj\Debug\90\st
 C:\train\appNatura\GitHubLuscaFusca\AppNaturaCliente\AppNatura04\obj\Debug\90\stamp\_GenerateJavaStubs.stamp
 C:\train\appNatura\GitHubLuscaFusca\AppNaturaCliente\AppNatura04\obj\Debug\90\stamp\_GeneratePackageManagerJava.stamp
 C:\train\appNatura\GitHubLuscaFusca\AppNaturaCliente\AppNatura04\obj\Debug\90\stamp\_ResolveLibraryProjectImports.stamp
+C:\train\appNatura\GitHubLuscaFusca\AppNaturaCliente\AppNatura04\obj\Debug\90\AppNaturaCliente.csprojAssemblyReference.cache

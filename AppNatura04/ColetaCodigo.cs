@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System;
 using System.Data;
+using Android.Support.Design.Widget;
 
 namespace AppNaturaCliente {
     [Activity(Label = "Direcione para o código do produto")]
@@ -29,6 +30,7 @@ namespace AppNaturaCliente {
         private TextView textView;
         private CameraSource cameraSource;
         private TextView campo;
+        private FloatingActionButton btnUploadFoto;
         private const int RequestCameraPermissionID = 1001;
         bool varBool = false;
         public static string codigo = null;
@@ -58,6 +60,9 @@ namespace AppNaturaCliente {
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
             SetContentView(Resource.Layout.ColetaCodigoView);
+
+            btnUploadFoto = FindViewById<FloatingActionButton>(Resource.Id.btn_upload);
+            btnUploadFoto.Click += BtnUpload_Click;
 
             cameraView = FindViewById<SurfaceView>(Resource.Id.surface_view);
             textView = FindViewById<TextView>(Resource.Id.text_view);
@@ -94,6 +99,11 @@ namespace AppNaturaCliente {
 
         public void SurfaceDestroyed(ISurfaceHolder holder) {
             cameraSource.Stop();
+        }
+
+        private void BtnUpload_Click(object sender, EventArgs e)
+        {
+            StartActivity(typeof(ColetaCodigoFoto));
         }
 
         public void ReceiveDetections(Detections detections) {

@@ -14,9 +14,9 @@ namespace AppNaturaCliente {
     [Activity(Label = "chat")]
     public class Chat :  AppCompatActivity {
 
-        private string nome = "teste da silva";
-        private string email = "teste.silva@fiap.com.br";
-        private string cel = "(11)99999-9999";
+        readonly private string nome = "teste da silva";
+        readonly private string email = "teste.silva@fiap.com.br";
+        readonly private string cel = "(11)99999-9999";
 
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);

@@ -9,6 +9,27 @@
         android:id="@+id/fotoView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerInside"
+        android:contentDescription="Foto a ser lida pelo aplicativo" />
+
+    <Button
+        android:id="@+id/btn_abrir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SELECIONAR FOTO"/>
+
+    <Button
+        android:id="@+id/btn_ler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LER FOTO"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/txt_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aguardando..."
+        android:layout_gravity="center"/>
 
 </LinearLayout>
