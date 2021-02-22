@@ -28,6 +28,7 @@ LinearLayout;obj\Debug\90\res\layout\coletacodigofoto.xml
 LinearLayout;obj\Debug\90\res\layout\exibeproduto.xml
 LinearLayout;obj\Debug\90\res\layout\lista.xml
 LinearLayout;obj\Debug\90\res\layout\listacarrinho.xml
+ListView;obj\Debug\90\res\layout\coletacodigofoto.xml
 ListView;obj\Debug\90\res\layout\listacarrinho.xml
 menu;obj\Debug\90\res\menu\menu_main.xml
 paths;C:\train\appNatura\GitHubLuscaFusca\AppNaturaCliente\AppNatura04\obj\Debug\90\lp\38\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
@@ -51,6 +52,7 @@ TextView;obj\Debug\90\res\layout\coletacodigofoto.xml
 TextView;obj\Debug\90\res\layout\coletacodigoview.xml
 TextView;obj\Debug\90\res\layout\content_main.xml
 TextView;obj\Debug\90\res\layout\exibeproduto.xml
+TextView;obj\Debug\90\res\layout\list_item.xml
 TextView;obj\Debug\90\res\layout\lista.xml
 TextView;obj\Debug\90\res\layout\listacarrinho.xml
 WebView;obj\Debug\90\res\layout\activity_main.xml

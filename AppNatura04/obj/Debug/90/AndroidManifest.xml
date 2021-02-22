@@ -15,6 +15,7 @@
     <activity android:label="Direcione para o código do produto" android:name="crc645255ab2e60a8ccd8.ColetaCodigo" />
     <activity android:label="Codigo em fotos" android:name="crc645255ab2e60a8ccd8.ColetaCodigoFoto" />
     <activity android:label="ListaCarrinho" android:name="crc645255ab2e60a8ccd8.ListaCarrinho" />
+    <activity android:label="Lista produtos selecionar" android:name="crc645255ab2e60a8ccd8.ListaProdutos" />
     <activity android:label="@string/app_name" android:theme="@style/AppTheme" android:name="crc645255ab2e60a8ccd8.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

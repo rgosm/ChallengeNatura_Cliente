@@ -128,12 +128,12 @@ public final class R {
 	public static final class layout {
 		public static final int browser_actions_context_menu_page = 0x7f0b001d;
 		public static final int browser_actions_context_menu_row = 0x7f0b001e;
-		public static final int notification_action = 0x7f0b0036;
-		public static final int notification_action_tombstone = 0x7f0b0037;
-		public static final int notification_template_custom_big = 0x7f0b003e;
-		public static final int notification_template_icon_group = 0x7f0b003f;
-		public static final int notification_template_part_chronometer = 0x7f0b0043;
-		public static final int notification_template_part_time = 0x7f0b0044;
+		public static final int notification_action = 0x7f0b0037;
+		public static final int notification_action_tombstone = 0x7f0b0038;
+		public static final int notification_template_custom_big = 0x7f0b003f;
+		public static final int notification_template_icon_group = 0x7f0b0040;
+		public static final int notification_template_part_chronometer = 0x7f0b0044;
+		public static final int notification_template_part_time = 0x7f0b0045;
 	}
 	public static final class string {
 		public static final int status_bar_notification_info_overflow = 0x7f0e0049;

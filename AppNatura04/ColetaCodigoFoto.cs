@@ -1,5 +1,6 @@
 ﻿using Android;
 using Android.App;
+using Android.Content;
 using Android.Gms.Vision;
 using Android.Gms.Vision.Texts;
 using Android.Graphics;
@@ -10,6 +11,8 @@ using Android.Views;
 using Android.Widget;
 using Plugin.Media;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -23,7 +26,8 @@ namespace AppNaturaCliente
         private Button btnAbrir;
         private TextView txtResult;
         private Bitmap bitmap;
-        private String codigoProduto;
+        private String[] codigoProduto;
+        private List<string> listaString;
 
         readonly string[] permissionGroup =
        {
@@ -60,7 +64,9 @@ namespace AppNaturaCliente
             btnProcess.Click += delegate
             {
                 TextRecognizer textRecognizer = new TextRecognizer.Builder(ApplicationContext).Build();
-                Regex regex = new Regex(@"([\d]{5})+");
+                Regex regex1 = new Regex(@"(\([\d]{5}\))+");
+                Regex regex2 = new Regex(@"([\d]{5})+");
+                listaString = new List<string>();
 
                 if (textRecognizer.IsOperational)
                 {
@@ -70,16 +76,19 @@ namespace AppNaturaCliente
                     for (int i = 0; i < itens.Size(); ++i)
                     {
                         TextBlock item = (TextBlock)itens.ValueAt(i);
-                        MatchCollection matches = regex.Matches(item.Value);
+                        MatchCollection matches = regex1.Matches(item.Value);
 
                         foreach(Match match in matches)
                         {
-                            stringBuilder.Append(match.Value);
+                            Match product = regex2.Match(match.Value);
+                            listaString.Add(product.ToString() + " - Nome do produto");
                         }
                     }
 
-                    txtResult.Text = stringBuilder.ToString();
-                    codigoProduto = stringBuilder.ToString();
+                    txtResult.Text = String.Join(",", listaString);
+                    codigoProduto = listaString.ToArray();
+
+                    IniciaLista();
                 }
                 else
                 {
@@ -92,6 +101,7 @@ namespace AppNaturaCliente
         private async void UploadFoto()
         {
             await CrossMedia.Current.Initialize();
+            listaString = null;
 
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
@@ -117,5 +127,25 @@ namespace AppNaturaCliente
                 btnProcess.Visibility = ViewStates.Invisible;
             }
         }
+
+        private void IniciaLista()
+        {
+            var intent = new Intent(this, typeof(ListaProdutos));
+            intent.PutExtra("codigosProds", codigoProduto);
+            StartActivity(intent);
+        }
+
+        public string[] GetCodigos()
+        {
+            return codigoProduto;
+        }
+
+        public void Teste()
+        {
+            foreach(string prod in codigoProduto)
+            Console.WriteLine(prod);
+        }
+
     }
+  
 }

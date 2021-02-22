@@ -74,9 +74,13 @@
     <Compile Include="HelloWebViewClient.cs" />
     <Compile Include="Lista.cs" />
     <Compile Include="ListaCarrinho.cs" />
+    <Compile Include="ListaProdutos.cs" />
     <Compile Include="ListViewAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="ExibeProduto.cs" />
+    <AndroidResource Include="Resources\layout\list_item.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
