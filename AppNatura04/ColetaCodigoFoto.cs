@@ -64,8 +64,9 @@ namespace AppNaturaCliente
             btnProcess.Click += delegate
             {
                 TextRecognizer textRecognizer = new TextRecognizer.Builder(ApplicationContext).Build();
-                Regex regex1 = new Regex(@"(\([\d]{5}\))+");
-                Regex regex2 = new Regex(@"([\d]{5})+");
+                ColetaCodigo codigo1 = new ColetaCodigo();
+                Regex regexBusca = new Regex(@"(\([\d]{5}\))+");
+                Regex regexRetorno = new Regex(@"([\d]{5})+");
                 listaString = new List<string>();
 
                 if (textRecognizer.IsOperational)
@@ -76,19 +77,33 @@ namespace AppNaturaCliente
                     for (int i = 0; i < itens.Size(); ++i)
                     {
                         TextBlock item = (TextBlock)itens.ValueAt(i);
-                        MatchCollection matches = regex1.Matches(item.Value);
+                        MatchCollection matches = regexBusca.Matches(item.Value);
 
                         foreach(Match match in matches)
                         {
-                            Match product = regex2.Match(match.Value);
-                            listaString.Add(product.ToString() + " - Nome do produto");
+                            Match product = regexRetorno.Match(match.Value);
+                            if(codigo1.BuscaDescricao(product.ToString()) != "Produto não encontrado")
+                            {
+                               listaString.Add(product.ToString() + " - " + codigo1.BuscaDescricao(product.ToString()));
+                            }
+                            //listaString.Add(product.ToString()+" - "+codigo1.BuscaDescricao(product.ToString()));
                         }
                     }
 
                     txtResult.Text = String.Join(",", listaString);
                     codigoProduto = listaString.ToArray();
 
-                    IniciaLista();
+                    if(codigoProduto.Count() > 0)
+                    {
+                        txtResult.Text = String.Join(",", listaString);
+                        IniciaLista();
+                        Finish();
+                    }
+                    else
+                    {
+                        txtResult.Text = "Nenhum produto encontrado";
+                    }
+                    
                 }
                 else
                 {
@@ -130,9 +145,9 @@ namespace AppNaturaCliente
 
         private void IniciaLista()
         {
-            var intent = new Intent(this, typeof(ListaProdutos));
-            intent.PutExtra("codigosProds", codigoProduto);
-            StartActivity(intent);
+            var listaProdutos = new Intent(this, typeof(ListaProdutos));
+            listaProdutos.PutExtra("codigosProds", codigoProduto);
+            StartActivity(listaProdutos);
         }
 
         public string[] GetCodigos()

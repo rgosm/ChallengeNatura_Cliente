@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Graphics;
 using Android.OS;
 using Android.Widget;
 using MySql.Data.MySqlClient;
@@ -9,6 +10,9 @@ namespace AppNaturaCliente
 {
     [Activity(Label = "Exibe Produto")]
     public class ExibeProduto : Activity {
+
+        private long registro;
+
         private Button btnIncluir;
         private Button btnCancelar;
         private Button btnAcrescentaUnidade;
@@ -19,8 +23,9 @@ namespace AppNaturaCliente
         private TextView txtQuantidade;
         private TextView txtPrecoUnitario;
         private TextView txtPrecoTotal;
-        
 
+        private Byte[] imagem;
+        public static Bitmap imagemProduto;
         private ImageView imgProduto;
 
         public IntPtr Context { get; private set; }
@@ -48,32 +53,41 @@ namespace AppNaturaCliente
             btnAcrescentaUnidade.Click += BtnAcrescentaUnidade_Click;
             btnTiraUnidade.Click += BtnTiraUnidade_Click;
 
+            txtDescricao.Text = Intent.GetStringExtra("txtDescricao");
+            txtCodigo.Text = "Cód. " + Intent.GetStringExtra("txtCodigo");
+            txtPrecoUnitario.Text = "Valor unitário: " + Intent.GetStringExtra("txtPrecoUnitario");
+            txtQuantidade.Text = Intent.GetStringExtra("txtQuantidade");
+            txtPrecoTotal.Text = Intent.GetStringExtra("txtPrecoTotal");
 
+            /*
             txtDescricao.Text =  ColetaCodigo.descricao.ToString();
             txtCodigo.Text = "Cód. " + ColetaCodigo.codigo.ToString();
             txtPrecoUnitario.Text = "Valor unitário: " + (Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
             txtQuantidade.Text = ColetaCodigo.quantidade.ToString();
             txtPrecoTotal.Text = (Convert.ToInt32(ColetaCodigo.quantidade.ToString()) * Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
-           
-            
-            imgProduto.SetImageBitmap(ColetaCodigo.imagemProduto);
+            */
+
+            imagem = (Intent.GetByteArrayExtra("imgProduto"));
+            imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
+            imgProduto.SetImageBitmap(imagemProduto);
+            //imgProduto.SetImageBitmap(ColetaCodigo.imagemProduto);
         }
         
         private void BtnAcrescentaUnidade_Click(object sender, EventArgs e) {
             txtQuantidade.Text = (Convert.ToInt32(txtQuantidade.Text) + 1).ToString();
-            txtPrecoTotal.Text = (Convert.ToInt32(txtQuantidade.Text) * (Convert.ToDouble(ColetaCodigo.preco))).ToString("C", CultureInfo.CurrentCulture);
+            txtPrecoTotal.Text = (Convert.ToInt32(txtQuantidade.Text) * (Convert.ToDouble(Intent.GetStringExtra("preco")))).ToString("C", CultureInfo.CurrentCulture);
         }
 
         private void BtnTiraUnidade_Click(object sender, EventArgs e) {
             txtQuantidade.Text = (Convert.ToInt32(txtQuantidade.Text) - 1).ToString();
-            txtPrecoTotal.Text = (Convert.ToInt32(txtQuantidade.Text) * (Convert.ToDouble(ColetaCodigo.preco))).ToString("C", CultureInfo.CurrentCulture);
+            txtPrecoTotal.Text = (Convert.ToInt32(txtQuantidade.Text) * (Convert.ToDouble(Intent.GetStringExtra("preco")))).ToString("C", CultureInfo.CurrentCulture);
 
             if (Convert.ToInt32(txtQuantidade.Text) < 1){
                 MySqlConnection conexao = new MySqlConnection(Conexao.strConexao);
                 MySqlCommand excluiProdutoCarrinho = new MySqlCommand(ComandosSQL.excluiProdutoCarrinho, conexao);
 
                 excluiProdutoCarrinho.Parameters.Add("@idCliente", MySqlDbType.VarChar, 60).Value = "1";
-                excluiProdutoCarrinho.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = ColetaCodigo.codigo.ToString();
+                excluiProdutoCarrinho.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = Intent.GetStringExtra("txtCodigo");
 
                 conexao.Open();
                 excluiProdutoCarrinho.ExecuteNonQuery();
@@ -95,15 +109,16 @@ namespace AppNaturaCliente
 
             insereDados.Parameters.Add("@idCliente", MySqlDbType.VarChar, 60).Value = "1";
             insereDados.Parameters.Add("@idRevendedor", MySqlDbType.VarChar, 60).Value = "2";
-            insereDados.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = ColetaCodigo.codigo.ToString();
+            insereDados.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = Intent.GetStringExtra("txtCodigo");
             insereDados.Parameters.Add("@quantidade", MySqlDbType.VarChar, 60).Value = txtQuantidade.Text;
 
             atualizaProdutoCarrinho.Parameters.Add("@quantidade", MySqlDbType.VarChar, 60).Value = txtQuantidade.Text;
             atualizaProdutoCarrinho.Parameters.Add("@idCliente", MySqlDbType.VarChar, 60).Value = "1";
-            atualizaProdutoCarrinho.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = ColetaCodigo.codigo.ToString();
+            atualizaProdutoCarrinho.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = Intent.GetStringExtra("txtCodigo");
 
+            registro = Intent.GetLongExtra("numRegistro", 0);
 
-            if (ColetaCodigo.numeroRegistro > 0) {
+            if (registro > 0) {
                 conexao.Open();
                 atualizaProdutoCarrinho.ExecuteNonQuery();
                 conexao.Close();

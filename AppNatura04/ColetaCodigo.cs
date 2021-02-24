@@ -22,6 +22,8 @@ using System.Linq;
 using System;
 using System.Data;
 using Android.Support.Design.Widget;
+using Android.Content;
+using System.Globalization;
 
 namespace AppNaturaCliente {
     [Activity(Label = "Direcione para o código do produto")]
@@ -39,6 +41,8 @@ namespace AppNaturaCliente {
         public static string quantidade = null;
         public static Bitmap imagemProduto = null;
         public static long numeroRegistro;
+        private string descricaoProduto;
+        byte[] imagem;
 
         public  void OnRequestPermissionsResult(int requestCode, string[] permissions, string[] grantResults) {
             switch (requestCode) {
@@ -94,7 +98,9 @@ namespace AppNaturaCliente {
                 return;
             }
             //Toast.MakeText(this, "Teste1", ToastLength.Short).Show();
-            cameraSource.Start(cameraView.Holder);
+            //cameraSource.Start(cameraView.Holder); 
+            // TODO: DESCOMENTAR A LINHA ACIMA ANTES DE CONCLUIR 
+            
         }
 
         public void SurfaceDestroyed(ISurfaceHolder holder) {
@@ -123,72 +129,146 @@ namespace AppNaturaCliente {
 
                     codigo = capturas["output"].ToString();
 
-                    if (codigo != "" && !varBool) { 
-                        MySqlConnection conexao = new MySqlConnection(Conexao.strConexao);
-                        MySqlCommand verificaProduto = new MySqlCommand(ComandosSQL.verificaProduto, conexao);
-                        MySqlCommand contaProdutoCarrinho = new MySqlCommand(ComandosSQL.contaProdutoCarrinho, conexao);
-                        MySqlCommand selecionaProdutoCarrinho = new MySqlCommand(ComandosSQL.selecionaProdutoCarrinho, conexao);
-                        
-                        MySqlDataReader retorno;
-                        MySqlDataReader produtoCarrinho;
-
-                        verificaProduto.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = codigo.ToString();
-                        contaProdutoCarrinho.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = codigo.ToString();
-                        contaProdutoCarrinho.Parameters.Add("@idCliente", MySqlDbType.VarChar, 60).Value = "1";
-                        selecionaProdutoCarrinho.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = codigo.ToString();
-                        selecionaProdutoCarrinho.Parameters.Add("@idCliente", MySqlDbType.VarChar, 60).Value = "1";
-
-                        conexao.Open();
-                        contaProdutoCarrinho.CommandType = CommandType.Text;
-
-                        numeroRegistro = (long)contaProdutoCarrinho.ExecuteScalar();
-                        contaProdutoCarrinho.Dispose();
-
-                        if (numeroRegistro > 0) {
-                            conexao.Close();
-                            Toast.MakeText(Application.Context, "Este produto já está em seu carrinho.", ToastLength.Long).Show();
-
-                            conexao.Open();
-                            produtoCarrinho = selecionaProdutoCarrinho.ExecuteReader();
-
-                            if (produtoCarrinho.Read()) {
-                                byte[] imagem = (byte[])(produtoCarrinho["imagem"]);
-                                imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
-                                descricao = produtoCarrinho.GetString("descricao").ToString();
-                                preco = produtoCarrinho.GetString("preco").ToString();
-                                quantidade = produtoCarrinho.GetString("quantidade").ToString();
-                                StartActivity(typeof(ExibeProduto));
-                                Finish();
-                            }
-
-                        } else {
-                            conexao.Close();
-                            
-                            conexao.Open();
-                            retorno = verificaProduto.ExecuteReader();
-                            
-                            if (retorno.Read()) {
-                                byte[] imagem = (byte[])(retorno["imagem"]);
-                                imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
-                                descricao = retorno.GetString("descricao").ToString();
-                                preco = retorno.GetString("preco").ToString();
-                                quantidade = "1";
-                                StartActivity(typeof(ExibeProduto));
-                                Finish();
-                            } else {
-                                Toast.MakeText(Application.Context, "O Produto não consta no banco de dados!", ToastLength.Long).Show();
-                                Finish();
-                            }
-                        }
-
-                        conexao.Close();
-                        varBool = true;
-                    }
+                    BuscaBanco(codigo);
                 });
             }
         }
 
-     
+     public void BuscaBanco(string codigo)
+        {
+            if (codigo != "" && !varBool)
+            {
+                MySqlConnection conexao = new MySqlConnection(Conexao.strConexao);
+                MySqlCommand verificaProduto = new MySqlCommand(ComandosSQL.verificaProduto, conexao);
+                MySqlCommand contaProdutoCarrinho = new MySqlCommand(ComandosSQL.contaProdutoCarrinho, conexao);
+                MySqlCommand selecionaProdutoCarrinho = new MySqlCommand(ComandosSQL.selecionaProdutoCarrinho, conexao);
+
+                MySqlDataReader retorno;
+                MySqlDataReader produtoCarrinho;
+
+                verificaProduto.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = codigo.ToString();
+                contaProdutoCarrinho.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = codigo.ToString();
+                contaProdutoCarrinho.Parameters.Add("@idCliente", MySqlDbType.VarChar, 60).Value = "1";
+                selecionaProdutoCarrinho.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = codigo.ToString();
+                selecionaProdutoCarrinho.Parameters.Add("@idCliente", MySqlDbType.VarChar, 60).Value = "1";
+
+                conexao.Open();
+                contaProdutoCarrinho.CommandType = CommandType.Text;
+
+                numeroRegistro = (long)contaProdutoCarrinho.ExecuteScalar();
+                contaProdutoCarrinho.Dispose();
+
+                if (numeroRegistro > 0)
+                {
+                    conexao.Close();
+                    Toast.MakeText(Application.Context, "Este produto já está em seu carrinho.", ToastLength.Long).Show();
+
+                    conexao.Open();
+                    produtoCarrinho = selecionaProdutoCarrinho.ExecuteReader();
+
+                    if (produtoCarrinho.Read())
+                    {
+                        imagem = (byte[])(produtoCarrinho["imagem"]);
+                        imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
+                        descricao = produtoCarrinho.GetString("descricao").ToString();
+                        preco = produtoCarrinho.GetString("preco").ToString();
+                        quantidade = produtoCarrinho.GetString("quantidade").ToString();
+                        IniciaExibeProduto();
+                        //StartActivity(typeof(ExibeProduto));
+                        Finish();
+                    }
+
+                }
+                else
+                {
+                    conexao.Close();
+
+                    conexao.Open();
+                    retorno = verificaProduto.ExecuteReader();
+
+                    if (retorno.Read())
+                    {
+                        imagem = (byte[])(retorno["imagem"]);
+                        imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
+                        descricao = retorno.GetString("descricao").ToString();
+                        preco = retorno.GetString("preco").ToString();
+                        quantidade = "1";
+                        IniciaExibeProduto();
+                        //StartActivity(typeof(ExibeProduto));
+                        Finish();
+                    }
+                    else
+                    {
+                        Toast.MakeText(Application.Context, "O Produto não consta no banco de dados!", ToastLength.Long).Show();
+                        Finish();
+                    }
+                }
+
+                conexao.Close();
+                varBool = true;
+            }
+        }
+
+        public string BuscaDescricao(string codigo)
+        {
+
+            if (codigo != "")
+            {
+                MySqlConnection conexao = new MySqlConnection(Conexao.strConexao);
+                MySqlCommand verificaProduto = new MySqlCommand(ComandosSQL.verificaProduto, conexao);
+
+                MySqlDataReader descricao;
+
+                verificaProduto.Parameters.Add("@idProduto", MySqlDbType.VarChar, 60).Value = codigo.ToString();
+
+                conexao.Open();
+                descricao = verificaProduto.ExecuteReader();
+
+                if (descricao.Read())
+                {
+                    descricaoProduto = descricao.GetString("descricao").ToString();
+                    conexao.Close();
+                    //return descricaoProduto;
+                }
+                else
+                {
+                    descricaoProduto = "Produto não encontrado";
+                    //return descricaoProduto;
+                }
+            }
+            return descricaoProduto;
+        }
+
+        
+
+        public void IniciaExibeProduto()
+        {
+
+            System.Console.WriteLine(descricao.ToString());
+            System.Console.WriteLine(codigo.ToString()); // TODO: VERIFICAR ERRO DE NULL POINTER NESSA LINHA
+            System.Console.WriteLine(preco);
+            System.Console.WriteLine(quantidade.ToString());
+            System.Console.WriteLine(numeroRegistro);
+
+            var exibirProdutos = new Intent(this, typeof(ExibeProduto));
+            exibirProdutos.PutExtra("txtDescricao", descricao.ToString());
+            exibirProdutos.PutExtra("txtCodigo", codigo.ToString());
+            exibirProdutos.PutExtra("txtPrecoUnitario", "Valor unitário: " + (Convert.ToDouble(preco)).ToString("C", CultureInfo.CurrentCulture));
+            exibirProdutos.PutExtra("txtQuantidade", quantidade.ToString());
+            exibirProdutos.PutExtra("txtPrecoTotal", (Convert.ToInt32(quantidade.ToString()) * Convert.ToDouble(preco)).ToString("C", CultureInfo.CurrentCulture));
+            exibirProdutos.PutExtra("imgProduto", imagem);
+            exibirProdutos.PutExtra("preco", preco);
+            exibirProdutos.PutExtra("numRegistro", numeroRegistro);
+            StartActivity(exibirProdutos);
+
+            /*
+             txtDescricao.Text =  ColetaCodigo.descricao.ToString();
+            txtCodigo.Text = "Cód. " + ColetaCodigo.codigo.ToString();
+            txtPrecoUnitario.Text = "Valor unitário: " + (Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
+            txtQuantidade.Text = ColetaCodigo.quantidade.ToString();
+            txtPrecoTotal.Text = (Convert.ToInt32(ColetaCodigo.quantidade.ToString()) * Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
+             */
+        }
 
         public void Release() {
         }
