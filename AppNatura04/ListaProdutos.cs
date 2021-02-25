@@ -22,13 +22,13 @@ namespace AppNaturaCliente
             ListView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs args)
             {
                 Regex regexRetorno = new Regex(@"([\d]{5})+");
-                ColetaCodigo codigo1 = new ColetaCodigo();
+                ColetaCodigo coletaCodigo = new ColetaCodigo();
 
                 Toast.MakeText(Application, "Adicionando "+((TextView)args.View).Text+ " ao carrinho", ToastLength.Short).Show();
                 Match codigo = regexRetorno.Match(((TextView)args.View).Text);
 
-                codigo1.BuscaBanco(codigo.ToString());
-                Finish();
+                coletaCodigo.BuscaBanco(this,codigo.ToString());
+                //Finish();
             };
             
         }

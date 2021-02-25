@@ -166,14 +166,15 @@ namespace AppNaturaCliente {
 
                 produtoCarrinho = selecionaProdutoCarrinho.ExecuteReader();
 
+
                 if (produtoCarrinho.Read()) {
                     byte[] imagem = (byte[])(produtoCarrinho["imagem"]);
-                    ColetaCodigo.codigo = String.Join("", System.Text.RegularExpressions.Regex.Split(lista[e.Position].codigo, @"[^\d]")).ToString();
-                    ColetaCodigo.imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
-                    ColetaCodigo.descricao = produtoCarrinho.GetString("descricao").ToString();
-                    ColetaCodigo.preco = produtoCarrinho.GetString("preco").ToString();
-                    ColetaCodigo.quantidade = produtoCarrinho.GetString("quantidade").ToString();
-                    ColetaCodigo.numeroRegistro = 2;
+                    ColetaCodigo.Codigo = String.Join("", System.Text.RegularExpressions.Regex.Split(lista[e.Position].codigo, @"[^\d]")).ToString();
+                    ColetaCodigo.ImagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
+                    ColetaCodigo.Descricao = produtoCarrinho.GetString("descricao").ToString();
+                    ColetaCodigo.Preco = produtoCarrinho.GetString("preco").ToString();
+                    ColetaCodigo.Quantidade = produtoCarrinho.GetString("quantidade").ToString();
+                    ColetaCodigo.NumeroRegistro = 2;
                     StartActivity(typeof(ExibeProduto));
                     Finish();
                 }

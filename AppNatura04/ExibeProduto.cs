@@ -28,6 +28,12 @@ namespace AppNaturaCliente
         public static Bitmap imagemProduto;
         private ImageView imgProduto;
 
+        private string textoDescricao;
+        private string textoCodigo;
+        private string textoPrecoUnitario;
+        private string textoQuantidade;
+        private string textoPrecoTotal;
+
         public IntPtr Context { get; private set; }
 
         protected override void OnCreate(Bundle savedInstanceState) {
@@ -53,11 +59,17 @@ namespace AppNaturaCliente
             btnAcrescentaUnidade.Click += BtnAcrescentaUnidade_Click;
             btnTiraUnidade.Click += BtnTiraUnidade_Click;
 
-            txtDescricao.Text = Intent.GetStringExtra("txtDescricao");
-            txtCodigo.Text = "Cód. " + Intent.GetStringExtra("txtCodigo");
-            txtPrecoUnitario.Text = "Valor unitário: " + Intent.GetStringExtra("txtPrecoUnitario");
-            txtQuantidade.Text = Intent.GetStringExtra("txtQuantidade");
-            txtPrecoTotal.Text = Intent.GetStringExtra("txtPrecoTotal");
+            textoDescricao = Intent.GetStringExtra("txtDescricao");
+            textoCodigo = "Cód. " + Intent.GetStringExtra("txtCodigo");
+            textoPrecoUnitario = "Valor unitário: " + Intent.GetStringExtra("txtPrecoUnitario");
+            textoQuantidade = Intent.GetStringExtra("txtQuantidade");
+            textoPrecoTotal = Intent.GetStringExtra("txtPrecoTotal");
+
+            txtDescricao.Text = textoDescricao;
+            txtCodigo.Text = textoCodigo;
+            txtPrecoUnitario.Text = textoPrecoUnitario;
+            txtQuantidade.Text = textoQuantidade;
+            txtPrecoTotal.Text = textoPrecoTotal;
 
             /*
             txtDescricao.Text =  ColetaCodigo.descricao.ToString();
@@ -67,7 +79,7 @@ namespace AppNaturaCliente
             txtPrecoTotal.Text = (Convert.ToInt32(ColetaCodigo.quantidade.ToString()) * Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
             */
 
-            imagem = (Intent.GetByteArrayExtra("imgProduto"));
+            imagem = Intent.GetByteArrayExtra("imgProduto");
             imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
             imgProduto.SetImageBitmap(imagemProduto);
             //imgProduto.SetImageBitmap(ColetaCodigo.imagemProduto);
@@ -133,9 +145,6 @@ namespace AppNaturaCliente
             Finish();
             StartActivity(typeof(MainActivity));
         }
-
-
-
 
         #region EXEMPLO EXIBE IMAGEM
         /*

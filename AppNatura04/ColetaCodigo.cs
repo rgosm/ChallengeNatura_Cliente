@@ -35,14 +35,22 @@ namespace AppNaturaCliente {
         private FloatingActionButton btnUploadFoto;
         private const int RequestCameraPermissionID = 1001;
         bool varBool = false;
-        public static string codigo = null;
-        public static string descricao = null;
-        public static string preco = null;
-        public static string quantidade = null;
-        public static Bitmap imagemProduto = null;
-        public static long numeroRegistro;
+        private static string codigo = null;
+        private static string descricao = null;
+        private static string preco = null;
+        private static string quantidade = null;
+        private static Bitmap imagemProduto = null;
+        private static long numeroRegistro;
         private string descricaoProduto;
         byte[] imagem;
+
+        public static string Codigo { get => codigo; set => codigo = value; }
+        public static Bitmap ImagemProduto { get => imagemProduto; set => imagemProduto = value; }
+        public static string Descricao { get => descricao; set => descricao = value; }
+        public static string Preco { get => Preco1; set => Preco1 = value; }
+        public static string Preco1 { get => preco; set => preco = value; }
+        public static string Quantidade { get => quantidade; set => quantidade = value; }
+        public static long NumeroRegistro { get => numeroRegistro; set => numeroRegistro = value; }
 
         public  void OnRequestPermissionsResult(int requestCode, string[] permissions, string[] grantResults) {
             switch (requestCode) {
@@ -127,17 +135,19 @@ namespace AppNaturaCliente {
                     Regex regex = new Regex("\\((?<output>[a-zA-Z0-9]+)/*\\).*");
                     GroupCollection capturas = regex.Match(source).Groups;
 
-                    codigo = capturas["output"].ToString();
+                    Codigo = capturas["output"].ToString();
 
-                    BuscaBanco(codigo);
+                    BuscaBanco(this,Codigo);
                 });
             }
         }
 
-     public void BuscaBanco(string codigo)
+     public void BuscaBanco(Context c, string codigo)
         {
+            
             if (codigo != "" && !varBool)
             {
+                Codigo = codigo;
                 MySqlConnection conexao = new MySqlConnection(Conexao.strConexao);
                 MySqlCommand verificaProduto = new MySqlCommand(ComandosSQL.verificaProduto, conexao);
                 MySqlCommand contaProdutoCarrinho = new MySqlCommand(ComandosSQL.contaProdutoCarrinho, conexao);
@@ -155,10 +165,10 @@ namespace AppNaturaCliente {
                 conexao.Open();
                 contaProdutoCarrinho.CommandType = CommandType.Text;
 
-                numeroRegistro = (long)contaProdutoCarrinho.ExecuteScalar();
+                NumeroRegistro = (long)contaProdutoCarrinho.ExecuteScalar();
                 contaProdutoCarrinho.Dispose();
 
-                if (numeroRegistro > 0)
+                if (NumeroRegistro > 0)
                 {
                     conexao.Close();
                     Toast.MakeText(Application.Context, "Este produto já está em seu carrinho.", ToastLength.Long).Show();
@@ -169,11 +179,11 @@ namespace AppNaturaCliente {
                     if (produtoCarrinho.Read())
                     {
                         imagem = (byte[])(produtoCarrinho["imagem"]);
-                        imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
-                        descricao = produtoCarrinho.GetString("descricao").ToString();
-                        preco = produtoCarrinho.GetString("preco").ToString();
-                        quantidade = produtoCarrinho.GetString("quantidade").ToString();
-                        IniciaExibeProduto();
+                        ImagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
+                        Descricao = produtoCarrinho.GetString("descricao").ToString();
+                        Preco = produtoCarrinho.GetString("preco").ToString();
+                        Quantidade = produtoCarrinho.GetString("quantidade").ToString();
+                        IniciaExibeProduto(c);
                         //StartActivity(typeof(ExibeProduto));
                         Finish();
                     }
@@ -189,11 +199,11 @@ namespace AppNaturaCliente {
                     if (retorno.Read())
                     {
                         imagem = (byte[])(retorno["imagem"]);
-                        imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
-                        descricao = retorno.GetString("descricao").ToString();
-                        preco = retorno.GetString("preco").ToString();
-                        quantidade = "1";
-                        IniciaExibeProduto();
+                        ImagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
+                        Descricao = retorno.GetString("descricao").ToString();
+                        Preco = retorno.GetString("preco").ToString();
+                        Quantidade = "1";
+                        IniciaExibeProduto(c);
                         //StartActivity(typeof(ExibeProduto));
                         Finish();
                     }
@@ -241,25 +251,19 @@ namespace AppNaturaCliente {
 
         
 
-        public void IniciaExibeProduto()
+        public void IniciaExibeProduto(Context c)
         {
 
-            System.Console.WriteLine(descricao.ToString());
-            System.Console.WriteLine(codigo.ToString()); // TODO: VERIFICAR ERRO DE NULL POINTER NESSA LINHA
-            System.Console.WriteLine(preco);
-            System.Console.WriteLine(quantidade.ToString());
-            System.Console.WriteLine(numeroRegistro);
-
-            var exibirProdutos = new Intent(this, typeof(ExibeProduto));
-            exibirProdutos.PutExtra("txtDescricao", descricao.ToString());
-            exibirProdutos.PutExtra("txtCodigo", codigo.ToString());
-            exibirProdutos.PutExtra("txtPrecoUnitario", "Valor unitário: " + (Convert.ToDouble(preco)).ToString("C", CultureInfo.CurrentCulture));
-            exibirProdutos.PutExtra("txtQuantidade", quantidade.ToString());
-            exibirProdutos.PutExtra("txtPrecoTotal", (Convert.ToInt32(quantidade.ToString()) * Convert.ToDouble(preco)).ToString("C", CultureInfo.CurrentCulture));
+            var exibirProdutos = new Intent(c, typeof(ExibeProduto)); 
+            exibirProdutos.PutExtra("txtDescricao", Descricao.ToString());
+            exibirProdutos.PutExtra("txtCodigo", Codigo.ToString());
+            exibirProdutos.PutExtra("txtPrecoUnitario", "Valor unitário: " + (Convert.ToDouble(Preco)).ToString("C", CultureInfo.CurrentCulture));
+            exibirProdutos.PutExtra("txtQuantidade", Quantidade.ToString());
+            exibirProdutos.PutExtra("txtPrecoTotal", (Convert.ToInt32(Quantidade.ToString()) * Convert.ToDouble(Preco)).ToString("C", CultureInfo.CurrentCulture));
             exibirProdutos.PutExtra("imgProduto", imagem);
-            exibirProdutos.PutExtra("preco", preco);
-            exibirProdutos.PutExtra("numRegistro", numeroRegistro);
-            StartActivity(exibirProdutos);
+            exibirProdutos.PutExtra("preco", Preco);
+            exibirProdutos.PutExtra("numRegistro", NumeroRegistro);
+            StartActivity(exibirProdutos);// TODO: VERIFICAR ERRO DE NULL POINTER NESSA LINHA
 
             /*
              txtDescricao.Text =  ColetaCodigo.descricao.ToString();
