@@ -263,7 +263,8 @@ namespace AppNaturaCliente {
             exibirProdutos.PutExtra("imgProduto", imagem);
             exibirProdutos.PutExtra("preco", Preco);
             exibirProdutos.PutExtra("numRegistro", NumeroRegistro);
-            StartActivity(exibirProdutos);// TODO: VERIFICAR ERRO DE NULL POINTER NESSA LINHA
+            exibirProdutos.AddFlags(ActivityFlags.NewTask);
+            Application.Context.StartActivity(exibirProdutos);
 
             /*
              txtDescricao.Text =  ColetaCodigo.descricao.ToString();

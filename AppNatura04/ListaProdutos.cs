@@ -28,7 +28,7 @@ namespace AppNaturaCliente
                 Match codigo = regexRetorno.Match(((TextView)args.View).Text);
 
                 coletaCodigo.BuscaBanco(this,codigo.ToString());
-                //Finish();
+                Finish();
             };
             
         }
