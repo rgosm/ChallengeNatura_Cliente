@@ -12,8 +12,11 @@ namespace AppNaturaCliente {
         private Button btnComprar;
         private Button btnCarrinho;
         private Button btnAjuda;
+        private bool chatOn = false;
         
         private WebView webViewInicial;
+
+        public bool ChatOn { get => chatOn; set => chatOn = value; }
 
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
@@ -57,8 +60,13 @@ namespace AppNaturaCliente {
         }
 
         private void BtnAjuda_Click(object sender, System.EventArgs e) {
-            StartActivity(typeof(Chat));
-            new MainActivity().ToggleAccelerometer();
+            if (!ChatOn)
+            {
+                ChatOn = true;
+                StartActivity(typeof(Chat));
+                new MainActivity().ToggleAccelerometer();
+            }
+            
         }
 
         private void BtnComprar_Click(object sender, System.EventArgs e) {
@@ -70,8 +78,12 @@ namespace AppNaturaCliente {
         {
            MainThread.BeginInvokeOnMainThread(() =>
             {
+                if (!ChatOn)
+                {
                     StartActivity(typeof(Chat));
                     ToggleAccelerometer();
+                }
+                    
             });
 
         }
@@ -87,7 +99,7 @@ namespace AppNaturaCliente {
             }
             catch (FeatureNotSupportedException)
             {
-                Toast.MakeText(Application.Context, "Feature not supported on device", ToastLength.Short).Show();
+                Toast.MakeText(Application.Context, "Recurso não suportado pelo aparelho", ToastLength.Short).Show();
             }
             catch (Exception ex)
             {

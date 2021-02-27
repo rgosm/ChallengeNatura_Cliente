@@ -86,7 +86,6 @@ namespace AppNaturaCliente
                             {
                                listaString.Add(product.ToString() + " - " + codigo1.BuscaDescricao(product.ToString()));
                             }
-                            //listaString.Add(product.ToString()+" - "+codigo1.BuscaDescricao(product.ToString()));
                         }
                     }
 
@@ -148,6 +147,7 @@ namespace AppNaturaCliente
             var listaProdutos = new Intent(this, typeof(ListaProdutos));
             listaProdutos.PutExtra("codigosProds", codigoProduto);
             StartActivity(listaProdutos);
+            Finish();
         }
 
         public string[] GetCodigos()

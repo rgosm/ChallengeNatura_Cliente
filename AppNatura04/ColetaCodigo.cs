@@ -10,28 +10,23 @@ using Android.Graphics;
 using Android.Support.V4.App;
 using Android;
 using Android.Util;
-using Android.Content.PM;
 using static Android.Gms.Vision.Detector;
 using Java.Lang;
-using Java.IO;
 using System.Text.RegularExpressions;
-using Android.Support.V7.Widget;
 using MySql.Data.MySqlClient;
-using System.IO;
-using System.Linq;
 using System;
 using System.Data;
 using Android.Support.Design.Widget;
 using Android.Content;
 using System.Globalization;
 
-namespace AppNaturaCliente {
+namespace AppNaturaCliente
+{
     [Activity(Label = "Direcione para o código do produto")]
     public class ColetaCodigo : AppCompatActivity, ISurfaceHolderCallback, IProcessor {
         private SurfaceView cameraView;
         private TextView textView;
         private CameraSource cameraSource;
-        private TextView campo;
         private FloatingActionButton btnUploadFoto;
         private const int RequestCameraPermissionID = 1001;
         bool varBool = false;
@@ -42,7 +37,7 @@ namespace AppNaturaCliente {
         private static Bitmap imagemProduto = null;
         private static long numeroRegistro;
         private string descricaoProduto;
-        byte[] imagem;
+        private static byte[] imagem;
 
         public static string Codigo { get => codigo; set => codigo = value; }
         public static Bitmap ImagemProduto { get => imagemProduto; set => imagemProduto = value; }
@@ -51,6 +46,7 @@ namespace AppNaturaCliente {
         public static string Preco1 { get => preco; set => preco = value; }
         public static string Quantidade { get => quantidade; set => quantidade = value; }
         public static long NumeroRegistro { get => numeroRegistro; set => numeroRegistro = value; }
+        public static byte[] Imagem { get => imagem; set => imagem = value; }
 
         public  void OnRequestPermissionsResult(int requestCode, string[] permissions, string[] grantResults) {
             switch (requestCode) {
@@ -105,10 +101,8 @@ namespace AppNaturaCliente {
                 }, RequestCameraPermissionID);
                 return;
             }
-            //Toast.MakeText(this, "Teste1", ToastLength.Short).Show();
-            //cameraSource.Start(cameraView.Holder); 
-            // TODO: DESCOMENTAR A LINHA ACIMA ANTES DE CONCLUIR 
-            
+
+            cameraSource.Start(cameraView.Holder);            
         }
 
         public void SurfaceDestroyed(ISurfaceHolder holder) {
@@ -118,6 +112,7 @@ namespace AppNaturaCliente {
         private void BtnUpload_Click(object sender, EventArgs e)
         {
             StartActivity(typeof(ColetaCodigoFoto));
+            Finish();
         }
 
         public void ReceiveDetections(Detections detections) {
@@ -178,14 +173,12 @@ namespace AppNaturaCliente {
 
                     if (produtoCarrinho.Read())
                     {
-                        imagem = (byte[])(produtoCarrinho["imagem"]);
-                        ImagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
+                        Imagem = (byte[])(produtoCarrinho["imagem"]);
+                        ImagemProduto = BitmapFactory.DecodeByteArray(Imagem, 0, Imagem.Length);
                         Descricao = produtoCarrinho.GetString("descricao").ToString();
                         Preco = produtoCarrinho.GetString("preco").ToString();
                         Quantidade = produtoCarrinho.GetString("quantidade").ToString();
                         IniciaExibeProduto(c);
-                        //StartActivity(typeof(ExibeProduto));
-                        Finish();
                     }
 
                 }
@@ -198,14 +191,12 @@ namespace AppNaturaCliente {
 
                     if (retorno.Read())
                     {
-                        imagem = (byte[])(retorno["imagem"]);
-                        ImagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
+                        Imagem = (byte[])(retorno["imagem"]);
+                        ImagemProduto = BitmapFactory.DecodeByteArray(Imagem, 0, Imagem.Length);
                         Descricao = retorno.GetString("descricao").ToString();
                         Preco = retorno.GetString("preco").ToString();
                         Quantidade = "1";
                         IniciaExibeProduto(c);
-                        //StartActivity(typeof(ExibeProduto));
-                        Finish();
                     }
                     else
                     {
@@ -238,12 +229,10 @@ namespace AppNaturaCliente {
                 {
                     descricaoProduto = descricao.GetString("descricao").ToString();
                     conexao.Close();
-                    //return descricaoProduto;
                 }
                 else
                 {
                     descricaoProduto = "Produto não encontrado";
-                    //return descricaoProduto;
                 }
             }
             return descricaoProduto;
@@ -253,28 +242,19 @@ namespace AppNaturaCliente {
 
         public void IniciaExibeProduto(Context c)
         {
-
             var exibirProdutos = new Intent(c, typeof(ExibeProduto)); 
             exibirProdutos.PutExtra("txtDescricao", Descricao.ToString());
             exibirProdutos.PutExtra("txtCodigo", Codigo.ToString());
             exibirProdutos.PutExtra("txtPrecoUnitario", "Valor unitário: " + (Convert.ToDouble(Preco)).ToString("C", CultureInfo.CurrentCulture));
             exibirProdutos.PutExtra("txtQuantidade", Quantidade.ToString());
             exibirProdutos.PutExtra("txtPrecoTotal", (Convert.ToInt32(Quantidade.ToString()) * Convert.ToDouble(Preco)).ToString("C", CultureInfo.CurrentCulture));
-            exibirProdutos.PutExtra("imgProduto", imagem);
+            exibirProdutos.PutExtra("imgProduto", Imagem);
             exibirProdutos.PutExtra("preco", Preco);
             exibirProdutos.PutExtra("numRegistro", NumeroRegistro);
             exibirProdutos.AddFlags(ActivityFlags.NewTask);
             Application.Context.StartActivity(exibirProdutos);
-
-            /*
-             txtDescricao.Text =  ColetaCodigo.descricao.ToString();
-            txtCodigo.Text = "Cód. " + ColetaCodigo.codigo.ToString();
-            txtPrecoUnitario.Text = "Valor unitário: " + (Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
-            txtQuantidade.Text = ColetaCodigo.quantidade.ToString();
-            txtPrecoTotal.Text = (Convert.ToInt32(ColetaCodigo.quantidade.ToString()) * Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
-             */
+            Finish();
         }
-
         public void Release() {
         }
     }

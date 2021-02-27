@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using MySql.Data.MySqlClient;
 
-namespace AppNaturaCliente {
+namespace AppNaturaCliente
+{
     [Activity(Label = "ListaCarrinho")]
 
     #region Lista
@@ -72,6 +68,22 @@ namespace AppNaturaCliente {
         private TextView txtTotal;
         private Button btnExcluir;
         private Button btnEnviar;
+        private static string codigo = null;
+        private static string descricao = null;
+        private static string preco = null;
+        private static string quantidade = null;
+        private static Bitmap imagemProduto = null;
+        private static long numeroRegistro;
+        private static byte[] imagem;
+
+        public static string Codigo { get => codigo; set => codigo = value; }
+        public static Bitmap ImagemProduto { get => imagemProduto; set => imagemProduto = value; }
+        public static string Descricao { get => descricao; set => descricao = value; }
+        public static string Preco { get => Preco1; set => Preco1 = value; }
+        public static string Preco1 { get => preco; set => preco = value; }
+        public static string Quantidade { get => quantidade; set => quantidade = value; }
+        public static long NumeroRegistro { get => numeroRegistro; set => numeroRegistro = value; }
+        public static byte[] Imagem { get => imagem; set => imagem = value; }
 
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
@@ -168,18 +180,34 @@ namespace AppNaturaCliente {
 
 
                 if (produtoCarrinho.Read()) {
-                    byte[] imagem = (byte[])(produtoCarrinho["imagem"]);
-                    ColetaCodigo.Codigo = String.Join("", System.Text.RegularExpressions.Regex.Split(lista[e.Position].codigo, @"[^\d]")).ToString();
-                    ColetaCodigo.ImagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
-                    ColetaCodigo.Descricao = produtoCarrinho.GetString("descricao").ToString();
-                    ColetaCodigo.Preco = produtoCarrinho.GetString("preco").ToString();
-                    ColetaCodigo.Quantidade = produtoCarrinho.GetString("quantidade").ToString();
-                    ColetaCodigo.NumeroRegistro = 2;
-                    StartActivity(typeof(ExibeProduto));
+                    Imagem = (byte[])(produtoCarrinho["imagem"]);
+                    Codigo = String.Join("", System.Text.RegularExpressions.Regex.Split(lista[e.Position].codigo, @"[^\d]")).ToString();
+                    Descricao = produtoCarrinho.GetString("descricao").ToString();
+                    Preco = produtoCarrinho.GetString("preco").ToString();
+                    Quantidade = produtoCarrinho.GetString("quantidade").ToString();
+                    NumeroRegistro = 2;
+                    IniciaExibeProduto();
                     Finish();
                 }
 
             }
         }
+
+        public void IniciaExibeProduto()
+        {
+            var exibirProdutos = new Intent(this, typeof(ExibeProduto));
+            exibirProdutos.PutExtra("txtDescricao", Descricao.ToString());
+            exibirProdutos.PutExtra("txtCodigo", Codigo.ToString());
+            exibirProdutos.PutExtra("txtPrecoUnitario", "Valor unitário: " + (Convert.ToDouble(Preco)).ToString("C", CultureInfo.CurrentCulture));
+            exibirProdutos.PutExtra("txtQuantidade", Quantidade.ToString());
+            exibirProdutos.PutExtra("txtPrecoTotal", (Convert.ToInt32(Quantidade.ToString()) * Convert.ToDouble(Preco)).ToString("C", CultureInfo.CurrentCulture));
+            exibirProdutos.PutExtra("imgProduto", Imagem);
+            exibirProdutos.PutExtra("preco", Preco);
+            exibirProdutos.PutExtra("numRegistro", NumeroRegistro);
+            exibirProdutos.AddFlags(ActivityFlags.NewTask);
+            Application.Context.StartActivity(exibirProdutos);
+            Finish();
+        }
     }
+
 }

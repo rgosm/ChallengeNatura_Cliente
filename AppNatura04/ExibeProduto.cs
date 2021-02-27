@@ -71,18 +71,9 @@ namespace AppNaturaCliente
             txtQuantidade.Text = textoQuantidade;
             txtPrecoTotal.Text = textoPrecoTotal;
 
-            /*
-            txtDescricao.Text =  ColetaCodigo.descricao.ToString();
-            txtCodigo.Text = "Cód. " + ColetaCodigo.codigo.ToString();
-            txtPrecoUnitario.Text = "Valor unitário: " + (Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
-            txtQuantidade.Text = ColetaCodigo.quantidade.ToString();
-            txtPrecoTotal.Text = (Convert.ToInt32(ColetaCodigo.quantidade.ToString()) * Convert.ToDouble(ColetaCodigo.preco)).ToString("C", CultureInfo.CurrentCulture);
-            */
-
             imagem = Intent.GetByteArrayExtra("imgProduto");
             imagemProduto = BitmapFactory.DecodeByteArray(imagem, 0, imagem.Length);
             imgProduto.SetImageBitmap(imagemProduto);
-            //imgProduto.SetImageBitmap(ColetaCodigo.imagemProduto);
         }
         
         private void BtnAcrescentaUnidade_Click(object sender, EventArgs e) {
@@ -111,7 +102,6 @@ namespace AppNaturaCliente
         
         private void BtnCancelar_Click(object sender, EventArgs e) {
             Finish();
-            //StartActivity(typeof(ColetaCodigo));
         }
 
         private void BtnIncluir_Click(object sender, System.EventArgs e) {
@@ -140,10 +130,9 @@ namespace AppNaturaCliente
                 insereDados.ExecuteNonQuery();
                 conexao.Close();
                 Toast.MakeText(Application.Context, "O produto foi incluído ao carrinho.", ToastLength.Long).Show();
-            }
+          }
             
             Finish();
-            StartActivity(typeof(MainActivity));
         }
 
         #region EXEMPLO EXIBE IMAGEM

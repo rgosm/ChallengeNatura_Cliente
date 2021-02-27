@@ -57,9 +57,11 @@ namespace AppNaturaCliente {
             };
 
             BtnClose.Click += (o, e) => {
+                MainActivity main = new MainActivity();
                 Finish();
                 Accelerometer.ShakeDetected -= new MainActivity().ShakeDetected;
-                new MainActivity().ToggleAccelerometer();
+                main.ChatOn = false;
+                main.ToggleAccelerometer();
             };
         }
 
@@ -88,10 +90,12 @@ namespace AppNaturaCliente {
 
         public override void OnBackPressed()
         {
+            MainActivity main = new MainActivity();
             base.OnBackPressed();
+            main.ChatOn = false;
             Finish();
             Accelerometer.ShakeDetected -= new MainActivity().ShakeDetected;
-            new MainActivity().ToggleAccelerometer();
+            main.ToggleAccelerometer();
         }
     }
 }
